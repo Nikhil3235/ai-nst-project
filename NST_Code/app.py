@@ -31,12 +31,18 @@ class UploadForm(FlaskForm):
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-encoder = VGGEncoder('vgg_normalised.pth').to(device)
-decoder = Decoder().to(device)
-decoder.load_state_dict(torch.load('experiment/final_exp/decoder_final.pth', map_location=device))
+encoder = None
+decoder = None
 
-encoder.eval()
-decoder.eval()
+def load_models():
+    global encoder, decoder
+    if encoder is None:
+        encoder = VGGEncoder('vgg_normalised.pth').to(device)
+        encoder.eval()
+    if decoder is None:
+        decoder = Decoder().to(device)
+        decoder.load_state_dict(torch.load('experiment/final_exp/decoder_final.pth', map_location=device))
+        decoder.eval()
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -103,6 +109,7 @@ def index():
             style_filename = form.style_path.data
 
         if content_filename and style_filename:
+            load_models()
             content_path = os.path.join(app.config['UPLOAD_FOLDER'], content_filename)
             style_path = os.path.join(app.config['UPLOAD_FOLDER'], style_filename)
             
