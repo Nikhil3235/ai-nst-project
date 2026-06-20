@@ -1,4 +1,7 @@
 *.pth filter=lfs diff=lfs merge=lfs -text
 *.png filter=lfs diff=lfs merge=lfs -text
+NST_Code/vgg_normalised.pth filter=lfs diff=lfs merge=lfs -text
+NST_Code/experiment/final_exp/decoder_final.pth filter=lfs diff=lfs merge=lfs -text
+NST_Code/experiment/final_exp/sample_iter_200.png filter=lfs diff=lfs merge=lfs -text
 *.jpg filter=lfs diff=lfs merge=lfs -text
 *.jpeg filter=lfs diff=lfs merge=lfs -text
